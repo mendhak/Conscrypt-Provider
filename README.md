@@ -15,6 +15,25 @@ It can probably be used by any application though.
 
 ## Instructions
 
+### Download
+
+Go to the [releases](https://github.com/mendhak/Conscrypt-Provider/releases).  Download the `.apk` file. 
+
+It's always a good idea to verify downloads.  First get my PGP public key
+
+    gpg --recv-key 6989CF77490369CFFDCBCD8995E7D75C76CBE9A9
+
+You can verify the signature using:
+
+    gpg --verify ~/Downloads/conscrypt-provider-1.apk.asc
+
+You can verify the checksum using:
+
+    sha256sum -c ~/Downloads/conscrypt-provider-1.apk.SHA256
+
+
+### Calling from your application
+
 TBC: I'll add code here on how to reference it from a calling application. 
 
 ```java
@@ -26,6 +45,8 @@ TBC: I'll add code here on how to reference it from a calling application.
     installMethod.invoke(null);
     installed = true;
 ```
+
+
 
 ## References
 
