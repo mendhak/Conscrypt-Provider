@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'signing'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
         minSdk 16
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +30,24 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    //Release signing key
+    if (project.hasProperty("RELEASE_STORE_FILE")) {
+        signingConfigs {
+            release {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
 }
 
 dependencies {
@@ -40,4 +59,36 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+task copyFinalAPK(group:'build') {
+    //Copies final APK to this directory
+    def finalApkName = "gpslogger-conscrypt-"+android.defaultConfig.versionName+".apk"
+
+    copy{
+        from "build/outputs/apk/release/app-release.apk"
+        into "./"
+
+        // Use a closure to map the file name
+        rename { String fileName ->
+            fileName.replace("app-release.apk", finalApkName)
+        }
+    }
+    //PGP Sign
+    //Verify with gpg --verify ~/Downloads/gpslogger-conscrypt-71.apk.asc
+    if(file(finalApkName).isFile()){
+        signing {
+            useGpgCmd()
+            sign file(finalApkName)
+        }
+
+        //SHA256 Checksum
+        //Verify with sha256sum -c ~/Downloads/gpslogger-conscrypt-71.apk.SHA256
+        ant.checksum(file: finalApkName, fileext: '.SHA256', algorithm: "SHA-256", pattern: "{0} {1}")
+    }
+
+}
+
+task deleteReleaseAPKs(group:"build", type:Delete){
+    delete fileTree(dir:'./', include:'*.apk*')
 }
