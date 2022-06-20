@@ -26,5 +26,7 @@ TBC: I'll add code here on how to reference it from a calling application.
 
 ## References
 
-I read through the [F-Droid blog post](https://f-droid.org/2020/05/29/android-updates-and-tls-connections.html) and the [associated gist](https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518). 
+I have made use of the [F-Droid blog post](https://f-droid.org/2020/05/29/android-updates-and-tls-connections.html) and an [associated gist](https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518).
+
+
 
