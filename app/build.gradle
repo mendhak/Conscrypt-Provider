@@ -63,7 +63,7 @@ dependencies {
 
 task copyFinalAPK(group:'build') {
     //Copies final APK to this directory
-    def finalApkName = "gpslogger-conscrypt-"+android.defaultConfig.versionName+".apk"
+    def finalApkName = "conscrypt-provider-"+android.defaultConfig.versionName+".apk"
 
     copy{
         from "build/outputs/apk/release/app-release.apk"
@@ -75,7 +75,7 @@ task copyFinalAPK(group:'build') {
         }
     }
     //PGP Sign
-    //Verify with gpg --verify ~/Downloads/gpslogger-conscrypt-71.apk.asc
+    //Verify with gpg --verify ~/Downloads/conscrypt-provider-71.apk.asc
     if(file(finalApkName).isFile()){
         signing {
             useGpgCmd()
@@ -83,7 +83,7 @@ task copyFinalAPK(group:'build') {
         }
 
         //SHA256 Checksum
-        //Verify with sha256sum -c ~/Downloads/gpslogger-conscrypt-71.apk.SHA256
+        //Verify with sha256sum -c ~/Downloads/conscrypt-provider-71.apk.SHA256
         ant.checksum(file: finalApkName, fileext: '.SHA256', algorithm: "SHA-256", pattern: "{0} {1}")
     }
 

@@ -11,9 +11,9 @@ class ConscryptProvider {
     companion object {
         @JvmStatic
         fun install() {
-            Log.d("GPSLoggerConscrypt", "Installing provider...");
+            Log.d("ConscryptProvider", "Installing provider...");
             Security.insertProviderAt(Conscrypt.newProvider(), 1);
-            Log.d("GPSLoggerConscrypt", "Provider installed successfully.");
+            Log.d("ConscryptProvider", "Provider installed successfully.");
         }
     }
 

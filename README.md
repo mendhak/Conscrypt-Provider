@@ -1,13 +1,13 @@
 
 ## Motivation
 
-I want to provide TLS 1.3 to pre-Android-10 users.  The simplest way to do this is to include the [Conscrypt library](https://github.com/google/conscrypt/). 
+I want to provide TLS 1.3 to pre-Android-10 users in my app.  The simplest way to do this is to include the [Conscrypt library](https://github.com/google/conscrypt/). 
 
 However, this library is massive, it adds about 5 MB to the APK size.  And it isn't needed for [Android 10+ users](https://developer.android.com/about/versions/10/features#tls-1.3).  
 
-The best way to deal with this situation is to make the Conscrypt provider a separate app, and reference it from the main GPSLogger application. 
+The next simplest way to deal with this situation is to make the Conscrypt provider a separate app, and reference it from my application. 
 
-This repository contains the code for the 'GPSLogger Conscrypt Provider' application.  It can probably be used by any application though.  
+This repository contains the code for the 'Conscrypt Provider'.  It can probably be used by any application though.  
 
 
 ## Instructions
