@@ -54,3 +54,4 @@ I have made use of the [F-Droid blog post](https://f-droid.org/2020/05/29/androi
 
 This isn't the best or perfect way to provide Conscrypt to applications, but it's _a_ way that works for me.  
 
+App Icon by [Flaticon.com](https://www.flaticon.com/free-icon/tls-protocol_4896619?term=tls&page=1&position=2&page=1&position=2&related_id=4896619&origin=style)
