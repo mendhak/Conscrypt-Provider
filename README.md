@@ -25,35 +25,35 @@ You can verify the APK checksum using:
 In the app startup code, you can look for the APK being installed, and if it is, include it.   
 
 ```java
-        // You should probably check if com.mendhak.conscryptprovider is installed first. 
-        // https://stackoverflow.com/q/6758841/974369
-        // Then:
-        try {
-            //Get signature to compare - either Github or F-Droid versions
-            String signature = Systems.getPackageSignature("com.mendhak.conscryptprovider", context);
-            if (
-                    signature.equalsIgnoreCase("C7:90:8D:17:33:76:1D:F3:CD:EB:56:67:16:C8:00:B5:AF:C5:57:DB")
-                    || signature.equalsIgnoreCase("05:F2:E6:59:28:08:89:81:B3:17:FC:9A:6D:BF:E0:4B:0F:A1:3B:4E")
-            ) {
-                signatureMatch = true;
-            }
-            else {
-                Log.e("com.mendhak.conscryptprovider found, but with an invalid signature. Ignoring.");
-                return;
-            }
+// You should probably check if com.mendhak.conscryptprovider is installed first. 
+// https://stackoverflow.com/q/6758841/974369
+// Then:
+try {
+    //Get signature to compare - either Github or F-Droid versions
+    String signature = Systems.getPackageSignature("com.mendhak.conscryptprovider", context);
+    if (
+            signature.equalsIgnoreCase("C7:90:8D:17:33:76:1D:F3:CD:EB:56:67:16:C8:00:B5:AF:C5:57:DB")
+            || signature.equalsIgnoreCase("05:F2:E6:59:28:08:89:81:B3:17:FC:9A:6D:BF:E0:4B:0F:A1:3B:4E")
+    ) {
+        signatureMatch = true;
+    }
+    else {
+        Log.e("com.mendhak.conscryptprovider found, but with an invalid signature. Ignoring.");
+        return;
+    }
 
-            //https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518
-            Context targetContext = context.createPackageContext("com.mendhak.conscryptprovider",
-                    Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
-            ClassLoader classLoader = targetContext.getClassLoader();
-            Class installClass = classLoader.loadClass("com.mendhak.conscryptprovider.ConscryptProvider");
-            Method installMethod = installClass.getMethod("install", new Class[]{});
-            installMethod.invoke(null);
-            installed = true;
-            Log.i("Conscrypt Provider installed");
-        } catch (Exception e) {
-            Log.e("Could not install Conscrypt Provider", e);
-        }
+    //https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518
+    Context targetContext = context.createPackageContext("com.mendhak.conscryptprovider",
+            Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+    ClassLoader classLoader = targetContext.getClassLoader();
+    Class installClass = classLoader.loadClass("com.mendhak.conscryptprovider.ConscryptProvider");
+    Method installMethod = installClass.getMethod("install", new Class[]{});
+    installMethod.invoke(null);
+    installed = true;
+    Log.i("Conscrypt Provider installed");
+} catch (Exception e) {
+    Log.e("Could not install Conscrypt Provider", e);
+}
 
 ```
 
