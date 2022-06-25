@@ -73,9 +73,6 @@ This repository contains the code for the 'Conscrypt Provider'.
 It can probably be used by any application though.  
 
 
-
-
-
 ## References
 
 I have made use of the [F-Droid blog post](https://f-droid.org/2020/05/29/android-updates-and-tls-connections.html) and an [associated gist](https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518).
