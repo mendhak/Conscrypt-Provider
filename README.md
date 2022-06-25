@@ -24,13 +24,43 @@ You can verify the APK checksum using:
 
 In the app startup code, you can look for the APK being installed, and if it is, include it.   
 
+First, get your helper methods ready
+
+```java
+public static String getPackageSignature(String targetPackage, Context context) throws PackageManager.NameNotFoundException, CertificateException, NoSuchAlgorithmException {
+    Signature sig = context.getPackageManager().getPackageInfo(targetPackage, PackageManager.GET_SIGNATURES).signatures[0];
+    CertificateFactory cf = CertificateFactory.getInstance("X.509");
+    X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(sig.toByteArray()));
+    String hexString = null;
+    MessageDigest md = MessageDigest.getInstance("SHA1");
+    byte[] publicKey = md.digest(cert.getEncoded());
+    hexString = byte2HexFormatted(publicKey);
+    return hexString;
+}
+
+static String byte2HexFormatted(byte[] arr) {
+    StringBuilder str = new StringBuilder(arr.length * 2);
+    for (int i = 0; i < arr.length; i++) {
+        String h = Integer.toHexString(arr[i]);
+        int l = h.length();
+        if (l == 1) h = "0" + h;
+        if (l > 2) h = h.substring(l - 2, l);
+        str.append(h.toUpperCase());
+        if (i < (arr.length - 1)) str.append(':');
+    }
+    return str.toString();
+}
+```
+
+Then early in the application lifecycle, do this: 
+
 ```java
 // You should probably check if com.mendhak.conscryptprovider is installed first. 
 // https://stackoverflow.com/q/6758841/974369
 // Then:
 try {
     //Get signature to compare - either Github or F-Droid versions
-    String signature = Systems.getPackageSignature("com.mendhak.conscryptprovider", context);
+    String signature = getPackageSignature("com.mendhak.conscryptprovider", context);
     if (
             signature.equalsIgnoreCase("C7:90:8D:17:33:76:1D:F3:CD:EB:56:67:16:C8:00:B5:AF:C5:57:DB")
             || signature.equalsIgnoreCase("05:F2:E6:59:28:08:89:81:B3:17:FC:9A:6D:BF:E0:4B:0F:A1:3B:4E")
