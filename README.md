@@ -1,6 +1,63 @@
 Conscrypt Provider is an APK which can provide the Conscrypt Library to apps that support older Android devices. 
 The [Conscrypt Library](https://github.com/google/conscrypt) provides modern TLS capabilities and ciphers, including TLS 1.3.   
-It is provided as a separate APK because not all users will need it, and because the library is quite large. 
+I have wrappted it in a standalone APK because not all users will need it, and because the library is quite large.
+
+Users will need to install the APK, and app developers will need to add code to their apps to make use of this provider. 
+
+## Instructions for users
+
+Go to the [releases](https://github.com/mendhak/Conscrypt-Provider/releases).  Download the `.apk` file and install it. 
+
+(Optional) It's always a good idea to verify downloads.  First get my PGP public key
+
+    gpg --recv-key 6989CF77490369CFFDCBCD8995E7D75C76CBE9A9
+
+You can verify the APK signature using:
+
+    gpg --verify ~/Downloads/conscrypt-provider-1.apk.asc
+
+You can verify the APK checksum using:
+
+    sha256sum -c ~/Downloads/conscrypt-provider-1.apk.SHA256
+
+## Instructions for developers
+
+In the app startup code, you can look for the APK being installed, and if it is, include it.   
+
+```java
+        // You should probably check if com.mendhak.conscryptprovider is installed first. 
+        // https://stackoverflow.com/q/6758841/974369
+        // Then:
+        try {
+            //Get signature to compare - either Github or F-Droid versions
+            String signature = Systems.getPackageSignature("com.mendhak.conscryptprovider", context);
+            if (
+                    signature.equalsIgnoreCase("C7:90:8D:17:33:76:1D:F3:CD:EB:56:67:16:C8:00:B5:AF:C5:57:DB")
+                    || signature.equalsIgnoreCase("05:F2:E6:59:28:08:89:81:B3:17:FC:9A:6D:BF:E0:4B:0F:A1:3B:4E")
+            ) {
+                signatureMatch = true;
+            }
+            else {
+                Log.e("com.mendhak.conscryptprovider found, but with an invalid signature. Ignoring.");
+                return;
+            }
+
+            //https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518
+            Context targetContext = context.createPackageContext("com.mendhak.conscryptprovider",
+                    Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+            ClassLoader classLoader = targetContext.getClassLoader();
+            Class installClass = classLoader.loadClass("com.mendhak.conscryptprovider.ConscryptProvider");
+            Method installMethod = installClass.getMethod("install", new Class[]{});
+            installMethod.invoke(null);
+            installed = true;
+            Log.i("Conscrypt Provider installed");
+        } catch (Exception e) {
+            Log.e("Could not install Conscrypt Provider", e);
+        }
+
+```
+
+Of course within the app, you'll also need to provide instructions for users to install the APK.
 
 ## Motivation
 
@@ -16,38 +73,6 @@ This repository contains the code for the 'Conscrypt Provider'.
 It can probably be used by any application though.  
 
 
-## Instructions
-
-### Download
-
-Go to the [releases](https://github.com/mendhak/Conscrypt-Provider/releases).  Download the `.apk` file. 
-
-It's always a good idea to verify downloads.  First get my PGP public key
-
-    gpg --recv-key 6989CF77490369CFFDCBCD8995E7D75C76CBE9A9
-
-You can verify the signature using:
-
-    gpg --verify ~/Downloads/conscrypt-provider-1.apk.asc
-
-You can verify the checksum using:
-
-    sha256sum -c ~/Downloads/conscrypt-provider-1.apk.SHA256
-
-
-### Calling from your application
-
-TBC: I'll add code here on how to reference it from a calling application. 
-
-```java
-    Context targetContext = context.createPackageContext("com.mendhak.conscryptprovider",
-            Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
-    ClassLoader classLoader = targetContext.getClassLoader();
-    Class installClass = classLoader.loadClass("com.mendhak.conscryptprovider.ConscryptProvider");
-    Method installMethod = installClass.getMethod("install", new Class[]{});
-    installMethod.invoke(null);
-    installed = true;
-```
 
 
 
