@@ -1,6 +1,6 @@
 Conscrypt Provider is an APK which can provide the Conscrypt Library to apps that support older Android devices. 
 The [Conscrypt Library](https://github.com/google/conscrypt) provides modern TLS capabilities and ciphers, including TLS 1.3.   
-I have wrappted it in a standalone APK because not all users will need it, and because the library is quite large.
+I have wrapped it in a standalone APK because not all users will need it, and because the library is quite large.
 
 Users will need to install the APK, and app developers will need to add code to their apps to make use of this provider. 
 
