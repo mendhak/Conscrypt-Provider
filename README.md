@@ -6,9 +6,9 @@ Users will need to install the APK, and app developers will need to add code to 
 
 ## Instructions for users
 
-Go to the [releases](https://github.com/mendhak/Conscrypt-Provider/releases).  Download the `.apk` file and install it. 
+Download the app from [F-Droid](https://f-droid.org/packages/com.mendhak.conscryptprovider/) or go to the [releases](https://github.com/mendhak/Conscrypt-Provider/releases).  Download the `.apk` file and install it. 
 
-(Optional) It's always a good idea to verify downloads.  First get my PGP public key
+(Optional) It's always a good idea to verify downloads (the method below only works with apk from the release section). First get my PGP public key
 
     gpg --recv-key 6989CF77490369CFFDCBCD8995E7D75C76CBE9A9
 
