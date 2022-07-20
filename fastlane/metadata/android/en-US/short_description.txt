@@ -1,1 +1,1 @@
-Conscrypt Provider
+Conscrypt Provider provides TLS 1.3 to apps supporting older Android devices

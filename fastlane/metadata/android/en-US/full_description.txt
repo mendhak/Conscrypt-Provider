@@ -1,11 +1,15 @@
 Conscrypt Provider is an APK which can provide the Conscrypt Library to apps that support older Android devices.
-The Conscrypt Library provides modern TLS capabilities and ciphers, including TLS 1.3.
-I have wrapped it in a standalone APK because not all users will need it, and because the library is quite large.
+The Conscrypt Library provides modern TLS capabilities and ciphers, including TLS 1.3, and supports all the way back to Android 2.3 Gingerbread!
 
-Users will need to install the APK, and app developers will need to add code to their apps to make use of this provider.
+I have wrapped it in a standalone APK because not all users will need it (Android 10+ has TLS 1.3 enabled), and because the library is quite large.
+
+Users: will need to install this app.  It does not appear in the app drawer as it has no interface.
+
+App Developers: will need to add code to their apps to make use of this provider.
+For instructions on how to do this, see the README: https://github.com/mendhak/Conscrypt-Provider
 
 ---
 
-I have made use of the <a href="https://f-droid.org/2020/05/29/android-updates-and-tls-connections.html">F-Droid blog</a> post and an <a href="https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518">associated gist</a>.
+I have made use of the <a href="https://f-droid.org/2020/05/29/android-updates-and-tls-connections.html">F-Droid blog post</a> and an <a href="https://gist.github.com/ByteHamster/f488f9993eeb6679c2b5f0180615d518">associated gist</a>.
 
-This isn't the best or perfect way to provide Conscrypt to applications, but it's a way that works for me.
+This may not be the best or perfect way to provide Conscrypt to applications, but it's a way that works for me.  I'm putting it on F-Droid in case it benefits others too.
