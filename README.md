@@ -60,6 +60,7 @@ Then early in the application lifecycle, do this:
 // Then:
 try {
     //Get signature to compare - either Github or F-Droid versions
+    //~/Android/Sdk/build-tools/33.0.0/apksigner verify --print-certs -v ~/Downloads/com.mendhak.conscryptprovider_3.apk
     String signature = getPackageSignature("com.mendhak.conscryptprovider", context);
     if (
             signature.equalsIgnoreCase("C7:90:8D:17:33:76:1D:F3:CD:EB:56:67:16:C8:00:B5:AF:C5:57:DB")
